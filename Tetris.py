@@ -277,9 +277,11 @@ def next_move():
         stack.draw()
 
     if stack.check_game_over():
+        activeStone = Stone(emptyForm, BG_COLOR)
         game_over()
     else:
-        window.after(SPEED, next_move)
+        fasterSpeed = int(SPEED/(1+float(points)/float(50)))
+        window.after(fasterSpeed, next_move)
 
 def game_over():
     global end_screen
