@@ -106,12 +106,16 @@ class Stack:
                     self.rectangles.append(Rectangle(x,y,color))
 
     def add_stone(self,stone):
-        start_x = stone.start_x
-        start_y = stone.start_y
         for x in range(stone.len):
             for y in range(stone.len):
                 if stone.form[y][x]:
-                    self.state[start_y + y][start_x + x] = stone.color
+                    abs_x = stone.start_x + x
+                    abs_y = stone.start_y + y
+                    color = stone.color
+                    self.state[abs_y][abs_x] = color
+                    if color != 0:
+                        self.rectangles.append(Rectangle(abs_x, abs_y, color))
+
 
     def check_collision(self,stone):
         for x in range(stone.len):
@@ -263,7 +267,6 @@ def next_move():
     if stack.check_collision(activeStone):
         stack.add_stone(activeStone)
         createStone = True
-        stack.draw()
 
     ret,line = stack.check_full_line()
     if ret:
