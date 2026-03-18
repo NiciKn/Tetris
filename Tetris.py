@@ -56,6 +56,18 @@ all_colors = [
     "#FF55FF"   # Magenta
 ]
 
+def highscore(n):
+    with open("highscore.txt","r") as f:
+        s = f.read()
+
+    high = int(s)
+    if n > high:
+        high = n
+        with open("highscore.txt","w") as f:
+            f.write(str(n))
+
+    return high
+
 def new_game():
 
     global end_screen
@@ -290,7 +302,10 @@ def game_over():
     global end_screen
     end_screen = True
     canvas.delete(ALL)
+    high = highscore(points)
 
+    canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2 - 100, text=f"Highscore: {str(high)}", fill="red",
+                       font=("consolas", 20), tag="highscore")
     canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2, text = "GAME OVER!", fill = "red", font = ("consolas",40), tag = "gameover")
     canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2 + 100, text="Leertaste drücken für neues Spiel!", fill="red",
                        font=("consolas", 10), tag="newGame")
